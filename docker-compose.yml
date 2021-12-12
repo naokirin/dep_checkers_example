@@ -1,0 +1,15 @@
+version: '2.2'
+volumes:
+  sockets:
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+services:
+  server:
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - ./reports:/reports
+      - ./web:/app
