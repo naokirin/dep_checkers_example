@@ -1,15 +1,17 @@
 version: '2.2'
-volumes:
-  sockets:
-  postgres-data:
-    driver: local
-  redis-data:
-    driver: local
 services:
   server:
     build: .
+    image: dep_checkers_server
     ports:
       - 3000:3000
     volumes:
       - ./reports:/reports
       - ./web:/app
+  trivy:
+    image: aquasec/trivy:0.21.2
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./caches:/root/.caches
+    command: dep_checkers_server
+    
